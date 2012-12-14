@@ -1,0 +1,20 @@
+{
+    "base": "tunnelProxy",
+    "instanceId": "yui_3_7_3_1_1355523448368_61",
+    "type": "TunnelProxy",
+    "id": "tunnelProxy",
+    "config": {},
+    "defaults": {
+        "config": {}
+    },
+    "definition": {},
+    "assets": {
+        "favicon.ico": "/favicon.ico"
+    },
+    "binders": {},
+    "langs": {},
+    "models": {},
+    "views": {},
+    "acAddons": {},
+    "assetsRoot": "/yahoo.application.test50/TunnelProxy/assets"
+}

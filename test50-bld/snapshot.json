@@ -1,0 +1,7 @@
+{
+    "name": "name",
+    "tag": "tag",
+    "packages": {
+        "yahoo.application.test50": "0.0.1"
+    }
+}
