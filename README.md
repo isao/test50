@@ -1,20 +1,18 @@
 README
 ======
 
-The shell script `build.sh` runs mojito's create and build commands. Pass an optional argument to use for the app name. The build product will be in `«appname»-bld`
+The shell script `build.sh` runs mojito's create and build commands. Pass an optional argument to use for the app name. The build product will be in `«appname»-bld`. Note-- edit the script to point to your copy of mojito.
 
 use like:
     
     build.sh test50
 
-output should be two directories:
+.. and the corresponding output should be two directories:
 
     test50      <- output of mojito create
     test50-bld  <- output of mojito build
 
-Mojito version (via git describe) used is 0.5.0-74-g21075b3
-
-I've added the results of this run to the repo as well for linking and discussion.
+Mojito version (via git describe) used was 0.5.0-74-g21075b3 for the sample output, which I've committed here for linking and discussion.
 
 notes
 -----
