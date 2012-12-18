@@ -26,6 +26,6 @@ notes
 related
 -------
 
-failing integration tests
+mojito, crt, mai-tai, ide integration tests
 
 * http://hudson.mobile.corp.yahoo.com:9999/yhudson/job/IDE-DP-Integration-Test/
