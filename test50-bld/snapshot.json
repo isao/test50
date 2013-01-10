@@ -2,6 +2,7 @@
     "name": "name",
     "tag": "tag",
     "packages": {
+        "yahoo.libs.yui": "*",
         "yahoo.application.test50": "0.0.1"
     }
 }

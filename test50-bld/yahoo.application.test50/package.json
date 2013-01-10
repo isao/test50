@@ -5,7 +5,9 @@
     "version": "0.0.1",
     "type": "application",
     "pkg_type": "application",
-    "dependencies": {},
+    "dependencies": {
+        "yahoo.libs.yui": "*"
+    },
     "engines": {
         "node": ">0.6",
         "npm": ">1.0",

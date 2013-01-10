@@ -361,6 +361,10 @@ YUI.add('mojito-action-context', function(Y, NAME) {
 
                 my.error(err);
 
+                my.done = function() {
+                    Y.log('ac.done() called after timeout. results lost', 'warn', NAME);
+                };
+
             }, this.staticAppConfig.actionTimeout);
         }
 
@@ -607,6 +611,7 @@ YUI.add('mojito-action-context', function(Y, NAME) {
                 clearTimeout(this._timer);
                 this._timer = null;
             }
+
             this._adapter.error(err);
         }
     };
