@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013, Yahoo! Inc.  All rights reserved.
+ * Copyright (c) 2011-2012, Yahoo! Inc.  All rights reserved.
  * Copyrights licensed under the New BSD License.
  * See the accompanying LICENSE file for terms.
  */
@@ -361,10 +361,6 @@ YUI.add('mojito-action-context', function(Y, NAME) {
 
                 my.error(err);
 
-                my.done = function() {
-                    Y.log('ac.done() called after timeout. results lost', 'warn', NAME);
-                };
-
             }, this.staticAppConfig.actionTimeout);
         }
 
@@ -611,7 +607,6 @@ YUI.add('mojito-action-context', function(Y, NAME) {
                 clearTimeout(this._timer);
                 this._timer = null;
             }
-
             this._adapter.error(err);
         }
     };
