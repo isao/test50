@@ -1,6 +1,6 @@
 {
     "base": "frame",
-    "instanceId": "yui_3_7_3_1_1359746132166_52",
+    "instanceId": "yui_3_7_3_1_1359746153007_56",
     "type": "HTMLFrameMojit",
     "config": {
         "deploy": true,
@@ -26,11 +26,7 @@
     },
     "id": "frame",
     "defaults": {},
-    "definition": {
-        "yui": {
-            "sharedYUIInstance": true
-        }
-    },
+    "definition": {},
     "binders": {},
     "langs": {},
     "models": {},

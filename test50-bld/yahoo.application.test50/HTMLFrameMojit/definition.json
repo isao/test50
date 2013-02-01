@@ -1,13 +1,9 @@
 {
     "type": "HTMLFrameMojit",
-    "instanceId": "yui_3_7_3_1_1359746132166_55",
+    "instanceId": "yui_3_7_3_1_1359746153007_53",
     "config": {},
     "defaults": {},
-    "definition": {
-        "yui": {
-            "sharedYUIInstance": true
-        }
-    },
+    "definition": {},
     "assets": {
         "favicon.ico": "/favicon.ico"
     },

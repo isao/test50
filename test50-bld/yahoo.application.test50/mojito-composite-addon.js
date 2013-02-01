@@ -19,14 +19,15 @@ YUI.add('mojito-composite-addon', function(Y, NAME) {
         this.id = id;
         this.callback = callback;
         this.__meta = [];
-        this.__perf = Y.mojito.perf.timeline(NAME, 'child', 'the whole child', id);
     }
 
 
     AdapterBuffer.prototype = {
 
         done: function(data, meta) {
-            this.__perf.done();
+            // HookSystem::StartBlock
+            Y.mojito.hooks.hook('adapterBuffer', this.hook, 'end', this);
+            // HookSystem::EndBlock
             this.buffer[this.id].meta = meta;
             this.buffer[this.id].data += data;
             this.buffer.__counter__ -= 1;
@@ -118,29 +119,33 @@ YUI.add('mojito-composite-addon', function(Y, NAME) {
 Y.mojito.controller = {
     index: function(ac) {
         ac.composite.done({
-            template: { title: 'Hello there' } // for the view only
+            title: 'Hello there'
         });
     }
-        };
+};
 </pre>
          * This will execute the child intances of the "FooMojit" and
          * "BarMojit", returning their rendered values into the parent's view
          * template, thus rendering the full parent view including the children.
-         * All the parent parameters are passed along to children.
+         * The API of this method is equivalent to ac.done().
          * @method done
-         * @param {object} opts The configuration object to be used.
-         *     <em>template<em> can be used to provide additional
-         * view template values.
+         * @param {object} templateData The data you want return by the request.
+         * @param {object} parentMeta Any meta-data required to service the request.
          */
-        done: function(opts) {
-            var template,
-                ac = this.ac,
+        done: function(templateData, parentMeta) {
+            var ac = this.ac,
                 cfg = this.command.instance.config,
                 children = cfg.children;
 
-            opts = opts || {};
+            templateData = templateData || {};
+            parentMeta   = parentMeta || {};
 
-            template = opts.template || {};
+            // Backward Compatibility block
+            if (templateData.template) {
+                Y.log('ac.composite.done({template:{title: "..."}}) is a legacy API, ' +
+                        'use ac.composite.done({title: "..."}) instead.', 'warn', NAME);
+                templateData = templateData.template;
+            }
 
             if (!children || Y.Object.size(children) === 0) {
                 throw new Error('Cannot run composite mojit children because' +
@@ -149,9 +154,17 @@ Y.mojito.controller = {
             }
 
             this.execute(cfg, function(data, meta) {
-                var merged = Y.merge(template, data);
-                ac.done(merged, meta);
-
+                parentMeta.assets = Y.mojito.util.metaMerge(
+                    parentMeta.assets || {},
+                    meta.assets || {}
+                );
+                // 1. templateData and data are normally exclusive, in which case
+                // the prority is not relevent. In which case we set D
+                // 2. parentMeta and meta should be merged to preserve the children
+                // binders map, assets, etc. but giving parentMeta the priority in case
+                // a custom configuration in the parent should overrule something coming
+                // from the chindren merged meta
+                ac.done(Y.merge(data, templateData), Y.mojito.util.metaMerge(parentMeta, meta));
             }, this);
         },
 
@@ -204,8 +217,8 @@ callback({
             var ac = this.ac,
                 buffer = {},
                 content = {},
-                meta = {},
-                perf;
+                my = this,
+                meta = {};
 
             cfg.children = cfg.children || {};
 
@@ -215,7 +228,9 @@ callback({
                                 ' array. \'children\' must be an object.');
             }
 
-            perf = Y.mojito.perf.timeline(NAME, 'execute', Y.Object.keys(cfg.children).join(','), ac.command);
+            // HookSystem::StartBlock
+            Y.mojito.hooks.hook('addon', this.adapter.hook, 'start', my, cfg);
+            // HookSystem::EndBlock
 
             meta.children = cfg.children;
 
@@ -246,7 +261,9 @@ callback({
                         ac.assets.mixAssets(meta.assets, cfg.assets);
                     }
 
-                    perf.done();
+                    // HookSystem::StartBlock
+                    Y.mojito.hooks.hook('addon', my.adapter.hook, 'end', my);
+                    // HookSystem::EndBlock
 
                     cb(content, meta);
                 });
@@ -336,6 +353,15 @@ callback({
 
                     childAdapter = new AdapterBuffer(buffer, childName,
                             callback);
+
+                    // HookSystem::StartBlock
+                    // piping the hook handler into the child mojits
+                    childAdapter.hook = this.adapter.hook;
+                    // HookSystem::EndBlock
+
+                    // HookSystem::StartBlock
+                    Y.mojito.hooks.hook('adapterBuffer', this.adapter.hook, 'start', childAdapter);
+                    // HookSystem::EndBlock
                     childAdapter = Y.mix(childAdapter, this.adapter);
 
                     this.dispatch(newCommand, childAdapter);
@@ -349,7 +375,7 @@ callback({
 }, '0.1.0', {requires: [
     'mojito',
     'mojito-util',
-    'mojito-perf',
+    'mojito-hooks',
     'mojito-assets-addon',
     'mojito-params-addon'
 ]});
