@@ -1,6 +1,6 @@
 {
     "type": "top_frame",
-    "instanceId": "yui_3_7_3_1_1357861140914_62",
+    "instanceId": "yui_3_7_3_1_1359743199053_54",
     "config": {},
     "defaults": {},
     "definition": {},
@@ -13,6 +13,7 @@
     },
     "langs": {},
     "models": {},
+    "partials": {},
     "views": {
         "index": {
             "content-path": "/yahoo.application.test50/top_frame/views/index.hb.html",

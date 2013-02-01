@@ -45,7 +45,9 @@ YUI.add('mojito-client', function(Y, NAME) {
         State = {
             PAUSED: 'paused',
             ACTIVE: 'active'
-        };
+        },
+        // hook system handler
+        globalHookHandler;
 
 
     // because there is a moment during startup when we need it, cache the
@@ -57,7 +59,7 @@ YUI.add('mojito-client', function(Y, NAME) {
 
     // this is the heart of mojitProxy.render(), but it needs to be a separate
     // function called once we have mojit type details
-    function privateRender(mp, data, view, cb) {
+    function privateRender(mp, data, view, viewEngine, cb) {
         var mojitView,
             renderer;
 
@@ -71,7 +73,8 @@ YUI.add('mojito-client', function(Y, NAME) {
         data.mojit_assets = data.mojit_assets || mp._assetsRoot;
 
         mojitView = mp._views[view];
-        renderer = new Y.mojito.ViewRenderer(mojitView.engine);
+        renderer = new Y.mojito.ViewRenderer(mojitView.engine, viewEngine);
+
         Y.log('Rendering "' + view + '" in Binder', 'debug', NAME);
         renderer.render(data, mp.type, mojitView['content-path'], {
             buffer: '',
@@ -218,7 +221,18 @@ YUI.add('mojito-client', function(Y, NAME) {
         this.timeLogStack = [];
         this.yuiConsole = null;
         this._pauseQueue = [];
+
         if (config) {
+            // HookSystem::StartBlock
+            // TODO: validate that config.perf could be set for client.
+            if (config.perf) {
+                globalHookHandler = {};
+                // enabling perf group
+                // TODO: this should not be executed here.
+                Y.mojito.hooks.enableHookGroup(globalHookHandler, 'mojito-perf');
+            }
+            // HookSystem::EndBlock
+
             // Note the server sends cleased config data directly to the
             // constructor from the deploy.server.js initializer to allow markup
             // to move over the wire in config strings without triggering
@@ -317,7 +331,9 @@ YUI.add('mojito-client', function(Y, NAME) {
 
         init: function(config) {
             fireLifecycle('pre-init', {config: config});
-            Y.mojito.perf.mark('mojito', 'core_client_start');
+            // HookSystem::StartBlock
+            Y.mojito.hooks.hook('mojitoClient', globalHookHandler, 'start', this);
+            // HookSystem::EndBlock
             var that = this,
                 appConfig = config.appConfig;
 
@@ -356,8 +372,9 @@ YUI.add('mojito-client', function(Y, NAME) {
             // id
             this._mojits = {};
 
-            Y.mojito.perf.mark('mojito',
-                'core_client_end', 'Mojito client library loaded');
+            // HookSystem::StartBlock
+            Y.mojito.hooks.hook('mojitoClient', globalHookHandler, 'end', this);
+            // HookSystem::EndBlock
             /* FUTURE -- perhaps only do this once a user needs it
             var singletons;
             singletons = {
@@ -438,12 +455,18 @@ YUI.add('mojito-client', function(Y, NAME) {
             binderMap = eventData.binderMap;
             parentId = eventData.parentId;
             topLevelMojitViewId = eventData.topLevelMojitViewId;
-            Y.mojito.perf.mark('mojito', 'core_binders_start');
+            // HookSystem::StartBlock
+            Y.mojito.hooks.hook('mojitoClientBind', globalHookHandler, 'start', this);
+            // HookSystem::EndBlock
 
             if (!totalBinders) {
-                Y.mojito.perf.mark('mojito', 'core_binders_resume');
+                // HookSystem::StartBlock
+                Y.mojito.hooks.hook('mojitoClientBind', globalHookHandler, 'resume', this);
+                // HookSystem::EndBlock
                 me.resume();
-                Y.mojito.perf.mark('mojito', 'core_binders_end');
+                // HookSystem::StartBlock
+                Y.mojito.hooks.hook('mojitoClientBind', globalHookHandler, 'end', this);
+                // HookSystem::EndBlock
                 fireLifecycle('post-attach-binders', {});
                 return;
             }
@@ -486,9 +509,13 @@ YUI.add('mojito-client', function(Y, NAME) {
                     recordBoundMojit(me._mojits, parentId, viewid, proxy.type);
                 });
 
-                Y.mojito.perf.mark('mojito', 'core_binders_resume');
+                // HookSystem::StartBlock
+                Y.mojito.hooks.hook('mojitoClientBindComplete', globalHookHandler, 'start', this);
+                // HookSystem::EndBlock
                 me.resume();
-                Y.mojito.perf.mark('mojito', 'core_binders_end');
+                // HookSystem::StartBlock
+                Y.mojito.hooks.hook('mojitoClientBindComplete', globalHookHandler, 'end', this);
+                // HookSystem::EndBlock
                 fireLifecycle('post-attach-binders', {});
             };
 
@@ -629,11 +656,18 @@ YUI.add('mojito-client', function(Y, NAME) {
 
             outputHandler = new Y.mojito.OutputHandler(viewId, cb, this);
 
+            // HookSystem::StartBlock
+            if (Y.mojito.hooks) {
+                outputHandler.hook = globalHookHandler;
+            }
+            // HookSystem::EndBlock
+
             this.dispatcher.dispatch(command, outputHandler);
         },
 
 
         doRender: function(mp, data, view, cb) {
+            var viewEngine = this.config.appConfig.viewEngine;
             if (!mp._views || !mp._assetsRoot) {
                 this.resourceStore.expandInstance({type: mp.type}, mp.context,
                     function(err, typeInfo) {
@@ -646,10 +680,10 @@ YUI.add('mojito-client', function(Y, NAME) {
                         }
                         mp._views = typeInfo.views;
                         mp._assetsRoot = typeInfo.assetsRoot;
-                        privateRender(mp, data, view, cb);
+                        privateRender(mp, data, view, viewEngine, cb);
                     });
             } else {
-                privateRender(mp, data, view, cb);
+                privateRender(mp, data, view, viewEngine, cb);
             }
         },
 
@@ -994,5 +1028,6 @@ YUI.add('mojito-client', function(Y, NAME) {
     'mojito-mojit-proxy',
     'mojito-tunnel-client',
     'mojito-output-handler',
-    'mojito-util'
+    'mojito-util',
+    'mojito-hooks'
 ]});

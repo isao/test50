@@ -1,6 +1,6 @@
 {
     "base": "tunnelProxy",
-    "instanceId": "yui_3_7_3_1_1357861140914_63",
+    "instanceId": "yui_3_7_3_1_1359743199053_55",
     "type": "TunnelProxy",
     "id": "tunnelProxy",
     "config": {},
@@ -14,6 +14,7 @@
     "binders": {},
     "langs": {},
     "models": {},
+    "partials": {},
     "views": {},
     "acAddons": {},
     "assetsRoot": "/yahoo.application.test50/TunnelProxy/assets"

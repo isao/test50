@@ -1,21 +1,19 @@
 {
     "type": "HTMLFrameMojit",
-    "instanceId": "yui_3_7_3_1_1357861140914_61",
+    "instanceId": "yui_3_7_3_1_1359743199053_53",
     "config": {},
     "defaults": {},
-    "definition": {
-        "yui": {
-            "sharedYUIInstance": true
-        }
-    },
+    "definition": {},
     "assets": {
         "favicon.ico": "/favicon.ico"
     },
     "binders": {},
     "langs": {},
     "models": {},
+    "partials": {},
     "views": {
         "index": {
+            "content-path": ".",
             "engine": "hb"
         }
     },

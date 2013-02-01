@@ -238,9 +238,10 @@ YUI.add('mojito-action-context', function(Y, NAME) {
         var i,
             addon,
             addonName,
-            acAddons = command.instance.acAddons || [],
-            perf = Y.mojito.perf.timeline('mojito', 'ac:addons',
-                'attaching addons to AC object', command);
+            acAddons = command.instance.acAddons || [];
+        // HookSystem::StartBlock
+        Y.mojito.hooks.hook('attachActionContext', adapter.hook, 'start', command);
+        // HookSystem::EndBlock
 
         for (i = 0; i < acAddons.length; i += 1) {
             addonName = acAddons[i];
@@ -262,7 +263,9 @@ YUI.add('mojito-action-context', function(Y, NAME) {
             }
         }
 
-        perf.done();  // closing the 'ac:addons' timeline
+        // HookSystem::StartBlock
+        Y.mojito.hooks.hook('attachActionContext', adapter.hook, 'end', command);
+        // HookSystem::EndBlock
 
     }
 
@@ -280,12 +283,12 @@ YUI.add('mojito-action-context', function(Y, NAME) {
             command = opts.command,
             store = opts.store,
             actionFunction,
-            perf = Y.mojito.perf.timeline('mojito', 'ac:init', 'set up AC object', command),
             error,
-            staticAppConfig = store.getAppConfig(store.getStaticContext()),
-            my;
+            my = this;
 
-        my = this;
+        // HookSystem::StartBlock
+        Y.mojito.hooks.hook('actionContext', opts.adapter.hook, 'start', my, opts);
+        // HookSystem::EndBlock
 
         // It's possible to setup a route that calls "foo.", which means that
         // the default action in the instance should be used instead.
@@ -304,13 +307,8 @@ YUI.add('mojito-action-context', function(Y, NAME) {
         this.instance = command.instance;
         this._adapter = opts.adapter;
 
-        // in here we should whitelist the stuff we need
-        this.staticAppConfig = {
-            actionTimeout: staticAppConfig.actionTimeout,
-            pathToRoot: staticAppConfig.pathToRoot,
-            cacheViewTemplates: staticAppConfig.cacheViewTemplates,
-            viewEngineOptions: staticAppConfig.viewEngine
-        };
+        // pathToRoot, viewEngine, amoung others will be available through this.
+        this.staticAppConfig = store.getStaticAppConfig();
 
         // Create a function which will properly delegate to the dispatcher to
         // perform the actual processing.
@@ -333,12 +331,9 @@ YUI.add('mojito-action-context', function(Y, NAME) {
             }
         }
 
-        perf.done(); // closing the 'ac:init' timeline
-
-        Y.mojito.perf.mark('mojito', 'action:start', 'before the action', command);
-
-        perf = Y.mojito.perf.timeline('mojito', 'action:call',
-            'the initial syncronous part of the action', command);
+        // HookSystem::StartBlock
+        Y.mojito.hooks.hook('actionContext', opts.adapter.hook, 'end1', my, opts);
+        // HookSystem::EndBlock
 
         // Reap the request/ac process within the timeout. If ac.done or
         // ac.error is invoked by user code prior to the time limit this
@@ -370,7 +365,9 @@ YUI.add('mojito-action-context', function(Y, NAME) {
 
         controller[actionFunction](this);
 
-        perf.done(); // closing the 'action:call' timeline
+        // HookSystem::StartBlock
+        Y.mojito.hooks.hook('actionContext', opts.adapter.hook, 'end2', my, opts);
+        // HookSystem::EndBlock
 
     }
 
@@ -407,16 +404,11 @@ YUI.add('mojito-action-context', function(Y, NAME) {
                 action = this.command.action,
                 mojitView,
                 renderer = null,
-                contentType,
-                contentPath,
+                contentType;
 
-                // static app configuration options
-                pathToRoot          = this.staticAppConfig.pathToRoot,
-                cacheViewTemplates  = this.staticAppConfig.cacheViewTemplates,
-                viewEngineOptions   = this.staticAppConfig.viewEngine || {},
-
-                perf = Y.mojito.perf.timeline('mojito', 'ac.done',
-                    'time to execute ac.done process', this.command);
+            // HookSystem::StartBlock
+            Y.mojito.hooks.hook('actionContextDone', adapter.hook, 'start', this);
+            // HookSystem::EndBlock
 
             if (Y.Lang.isString(meta)) {
                 // If the meta string is a serializer set it
@@ -439,9 +431,6 @@ YUI.add('mojito-action-context', function(Y, NAME) {
             meta.http.code = meta.http.code || 200;
             meta.http.headers = meta.http.headers || {};
             meta.view = meta.view || {};
-
-            // Cache all templates by default
-            meta.view.cacheTemplates = (cacheViewTemplates === false ? false : true);
 
             // Check to see we need to serialize the data
             if (meta.serialize && serializer[meta.serialize]) {
@@ -531,7 +520,9 @@ YUI.add('mojito-action-context', function(Y, NAME) {
                 //Y.log('pushing to native adapter', 'info', NAME);
                 adapter[callbackFunc](data, meta);
 
-                perf.done(); // closing the 'ac.done' timeline
+                // HookSystem::StartBlock
+                Y.mojito.hooks.hook('actionContextDone', adapter.hook, 'end1', this);
+                // HookSystem::EndBlock
 
                 return;
             }
@@ -553,30 +544,11 @@ YUI.add('mojito-action-context', function(Y, NAME) {
                 // Y.log('Rendering "' + meta.view.name + '" view for "' +
                 //     (instance.id || '@' + instance.type) + '"', 'info', NAME);
 
-                contentPath = mojitView['content-path'];
-                // this is mainly used by html5app
-                if (pathToRoot) {
-                    contentPath = pathToRoot + contentPath;
-                }
-
-                // optimize for server only
-                if ('server' === context.runtime) {
-                    renderer = CACHE.renderers[mojitView.engine];
-                    if (!renderer) {
-                        // viewEngineOptions are app level
-                        CACHE.renderers[mojitView.engine] = renderer =
-                            new (Y.mojito.addons.viewEngines[mojitView.engine])('', viewEngineOptions);
-                    }
-                    renderer.viewId = meta.view.id;
-                    renderer.render(data, instance.type, contentPath, adapter, meta, more);
-                } else {
-                    renderer = new Y.mojito.ViewRenderer(
-                        mojitView.engine,
-                        meta.view.id,
-                        viewEngineOptions
-                    );
-                    renderer.render(data, instance.type, contentPath, adapter, meta, more);
-                }
+                // TODO: we might want to use a view renderer factory
+                // that can provide caching capabilities for better performance
+                // instead of creating objects over and over again per mojit instance
+                renderer = new Y.mojito.ViewRenderer(mojitView.engine, this.staticAppConfig.viewEngine);
+                renderer.render(data, instance, mojitView, adapter, meta, more);
 
             } else {
 
@@ -587,9 +559,9 @@ YUI.add('mojito-action-context', function(Y, NAME) {
                 adapter[callbackFunc](data, meta);
             }
 
-            perf.done(); // closing the 'ac.done' timeline
-
-            Y.mojito.perf.mark('mojito', 'action:stop', 'after the action', this.command);
+            // HookSystem::StartBlock
+            Y.mojito.hooks.hook('actionContextDone', adapter.hook, 'end2', this);
+            // HookSystem::EndBlock
         },
 
         /**
@@ -623,5 +595,6 @@ YUI.add('mojito-action-context', function(Y, NAME) {
     'json-stringify',
     'event-custom-base',
     'mojito-view-renderer',
-    'mojito-util'
+    'mojito-util',
+    'mojito-hooks'
 ]});
