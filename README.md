@@ -28,4 +28,4 @@ related
 
 mojito, crt, mai-tai, ide integration tests
 
-* http://hudson.mobile.corp.yahoo.com:9999/yhudson/job/IDE-DP-Integration-Test/
+* http://hudson.mobile.corp.yahoo.com:9999/yhudson/view/cocktailsIDE/
