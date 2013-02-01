@@ -1,6 +1,6 @@
 {
     "base": "frame",
-    "instanceId": "yui_3_7_3_1_1357861140914_58",
+    "instanceId": "yui_3_7_3_1_1359746069305_62",
     "type": "HTMLFrameMojit",
     "config": {
         "deploy": true,
@@ -11,7 +11,7 @@
         "assets": {
             "bottom": {
                 "js": [
-                    "//yahoo.com/yahoo.crt.lib/yui-cfg.js"
+                    "/yahoo.crt.lib/yui-cfg.js"
                 ]
             }
         }
