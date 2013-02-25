@@ -11,21 +11,21 @@ YUI.add('mojito-view-renderer', function (Y) {
 
     'use strict';
 
+    var cache = {};
+
     /*
-     * Mojito's view renderer abstraction. Will craete a rendering
-     * engine object depending on the 'type' specified.
+     * Mojito's view renderer abstraction. Will plugin in the specified view
+     * plugin to do the rendering, depending on the 'type' specified.
      * @class ViewRenderer
      * @namespace Y.mojito
      * @constructor
      * @param {String} type view engine addon type to use
-     * @param {String} viewId
-     * @param {Object} options
+     * @param {Object} options View engines configuration.
      */
-    function Renderer(type, viewId, options) {
+    function Renderer(type, options) {
         this._type = type || 'hb';
-        this._viewId = viewId;
         this._options = options;
-        this._renderer = null;
+        this._renderer = cache[type];
     }
 
 
@@ -44,7 +44,7 @@ YUI.add('mojito-view-renderer', function (Y) {
             var my = this,
                 viewEngines = Y.mojito.addons.viewEngines,
                 fn = function () {
-                    callback(null, new (viewEngines[my._type])(my._viewId, my._options));
+                    callback(null, new (viewEngines[my._type])(my._options));
                 };
 
             // some perf optimization to avoid calling Y.use when
@@ -54,7 +54,7 @@ YUI.add('mojito-view-renderer', function (Y) {
             if (viewEngines[my._type]) {
                 fn();
             } else {
-                // attaching the view engine in a form of mojito-mu, mojito-hb, etc
+                // attaching the view engine yui module
                 Y.use('mojito-' + this._type, function () {
                     if (!viewEngines[my._type]) {
                         callback(new Error('Invalid view engine: ' + my._type));
@@ -79,6 +79,9 @@ YUI.add('mojito-view-renderer', function (Y) {
          */
         render: function (data, mojitType, tmpl, adapter, meta, more) {
             var my = this;
+            // HookSystem::StartBlock
+            Y.mojito.hooks.hook('Render', adapter.hook, data, mojitType, tmpl, adapter, meta, more);
+            // HookSystem::EndBlock
             /*
                 TODO: this method should also do:
                     a) load template when needed
@@ -92,6 +95,7 @@ YUI.add('mojito-view-renderer', function (Y) {
                         return;
                     }
                     my._renderer = engine;
+                    cache[my._type] = engine; // caching renderer instance
                     my._renderer.render(data, mojitType, tmpl, adapter, meta, more);
                 });
             } else {
@@ -103,5 +107,6 @@ YUI.add('mojito-view-renderer', function (Y) {
     Y.namespace('mojito').ViewRenderer = Renderer;
 
 }, '0.1.0', {requires: [
-    'mojito'
+    'mojito',
+    'mojito-hooks'
 ]});

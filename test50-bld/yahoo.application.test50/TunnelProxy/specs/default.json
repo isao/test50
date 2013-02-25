@@ -1,20 +1,21 @@
 {
     "base": "tunnelProxy",
-    "instanceId": "yui_3_7_3_1_1357861140914_63",
+    "instanceId": "yui_3_7_3_1_1361812252650_54",
     "type": "TunnelProxy",
     "id": "tunnelProxy",
     "config": {},
-    "defaults": {
-        "config": {}
-    },
-    "definition": {},
+    "fullPath": "/Users/isao/Repos/mojito/myfork/lib/app/mojits/TunnelProxy",
     "assets": {
         "favicon.ico": "/favicon.ico"
     },
     "binders": {},
     "langs": {},
     "models": {},
+    "partials": {},
     "views": {},
-    "acAddons": {},
-    "assetsRoot": "/yahoo.application.test50/TunnelProxy/assets"
+    "assetsRoot": "/yahoo.application.test50/TunnelProxy/assets",
+    "defaults": {
+        "config": {}
+    },
+    "definition": {}
 }

@@ -1,24 +1,22 @@
 {
     "type": "HTMLFrameMojit",
-    "instanceId": "yui_3_7_3_1_1357861140914_61",
+    "instanceId": "yui_3_7_3_1_1361812252650_50",
     "config": {},
-    "defaults": {},
-    "definition": {
-        "yui": {
-            "sharedYUIInstance": true
-        }
-    },
+    "fullPath": "/Users/isao/Repos/mojito/myfork/lib/app/mojits/HTMLFrameMojit",
     "assets": {
         "favicon.ico": "/favicon.ico"
     },
     "binders": {},
     "langs": {},
     "models": {},
+    "partials": {},
     "views": {
         "index": {
+            "content-path": ".",
             "engine": "hb"
         }
     },
-    "acAddons": {},
-    "assetsRoot": "/yahoo.application.test50/HTMLFrameMojit/assets"
+    "assetsRoot": "/yahoo.application.test50/HTMLFrameMojit/assets",
+    "defaults": {},
+    "definition": {}
 }
