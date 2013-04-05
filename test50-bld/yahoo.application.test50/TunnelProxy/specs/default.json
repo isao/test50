@@ -1,10 +1,9 @@
 {
     "base": "tunnelProxy",
-    "instanceId": "yui_3_7_3_1_1361812252650_54",
+    "instanceId": "yui_3_8_1_1_1365199992738_54",
     "type": "TunnelProxy",
     "id": "tunnelProxy",
     "config": {},
-    "fullPath": "/Users/isao/Repos/mojito/myfork/lib/app/mojits/TunnelProxy",
     "assets": {
         "favicon.ico": "/favicon.ico"
     },

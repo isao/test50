@@ -1,8 +1,7 @@
 {
     "type": "top_frame",
-    "instanceId": "yui_3_7_3_1_1361812252650_49",
+    "instanceId": "yui_3_8_1_1_1365199992738_51",
     "config": {},
-    "fullPath": "/Users/isao/Repos/mojito/apps/test50/test50/mojits/top_frame",
     "assets": {
         "favicon.ico": "/favicon.ico",
         "index.css": "/yahoo.application.test50/top_frame/assets/index.css"

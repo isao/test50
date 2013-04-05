@@ -1,8 +1,7 @@
 {
     "type": "LazyLoad",
-    "instanceId": "yui_3_7_3_1_1361812252650_51",
+    "instanceId": "yui_3_8_1_1_1365199992738_53",
     "config": {},
-    "fullPath": "/Users/isao/Repos/mojito/myfork/lib/app/mojits/LazyLoad",
     "assets": {
         "favicon.ico": "/favicon.ico"
     },

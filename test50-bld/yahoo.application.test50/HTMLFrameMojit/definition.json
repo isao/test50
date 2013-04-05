@@ -1,8 +1,7 @@
 {
     "type": "HTMLFrameMojit",
-    "instanceId": "yui_3_7_3_1_1361812252650_50",
+    "instanceId": "yui_3_8_1_1_1365199992738_50",
     "config": {},
-    "fullPath": "/Users/isao/Repos/mojito/myfork/lib/app/mojits/HTMLFrameMojit",
     "assets": {
         "favicon.ico": "/favicon.ico"
     },
@@ -12,7 +11,7 @@
     "partials": {},
     "views": {
         "index": {
-            "content-path": ".",
+            "content-path": "/yahoo.application.test50/HTMLFrameMojit/views/index.hb.html",
             "engine": "hb"
         }
     },
