@@ -1,18 +1,1 @@
-{
-    "type": "TunnelProxy",
-    "instanceId": "yui_3_8_1_1_1365199992738_52",
-    "config": {},
-    "assets": {
-        "favicon.ico": "/favicon.ico"
-    },
-    "binders": {},
-    "langs": {},
-    "models": {},
-    "partials": {},
-    "views": {},
-    "assetsRoot": "/yahoo.application.test50/TunnelProxy/assets",
-    "defaults": {
-        "config": {}
-    },
-    "definition": {}
-}
+{"type":"TunnelProxy","instanceId":"yui_3_9_1_1_1365200207176_55","config":{},"assets":{"favicon.ico":"/favicon.ico"},"binders":{},"langs":{},"models":{},"partials":{},"views":{},"assetsRoot":"/yahoo.application.test50/TunnelProxy/assets","defaults":{"config":{}},"definition":{}}
