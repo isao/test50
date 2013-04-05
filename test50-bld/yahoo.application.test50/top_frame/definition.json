@@ -1,8 +1,9 @@
 {
     "type": "top_frame",
-    "instanceId": "yui_3_7_3_1_1361812252650_49",
+    "instanceId": "yui_3_7_3_1_1365201677997_52",
     "config": {},
-    "fullPath": "/Users/isao/Repos/mojito/apps/test50/test50/mojits/top_frame",
+    "defaults": {},
+    "definition": {},
     "assets": {
         "favicon.ico": "/favicon.ico",
         "index.css": "/yahoo.application.test50/top_frame/assets/index.css"
@@ -19,7 +20,6 @@
             "engine": "hb"
         }
     },
-    "assetsRoot": "/yahoo.application.test50/top_frame/assets",
-    "defaults": {},
-    "definition": {}
+    "acAddons": {},
+    "assetsRoot": "/yahoo.application.test50/top_frame/assets"
 }

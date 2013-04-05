@@ -1,8 +1,11 @@
 {
     "type": "TunnelProxy",
-    "instanceId": "yui_3_7_3_1_1361812252650_52",
+    "instanceId": "yui_3_7_3_1_1365201677997_54",
     "config": {},
-    "fullPath": "/Users/isao/Repos/mojito/myfork/lib/app/mojits/TunnelProxy",
+    "defaults": {
+        "config": {}
+    },
+    "definition": {},
     "assets": {
         "favicon.ico": "/favicon.ico"
     },
@@ -11,9 +14,6 @@
     "models": {},
     "partials": {},
     "views": {},
-    "assetsRoot": "/yahoo.application.test50/TunnelProxy/assets",
-    "defaults": {
-        "config": {}
-    },
-    "definition": {}
+    "acAddons": {},
+    "assetsRoot": "/yahoo.application.test50/TunnelProxy/assets"
 }

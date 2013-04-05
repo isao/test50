@@ -1,8 +1,9 @@
 {
     "type": "LazyLoad",
-    "instanceId": "yui_3_7_3_1_1361812252650_51",
+    "instanceId": "yui_3_7_3_1_1365201677997_55",
     "config": {},
-    "fullPath": "/Users/isao/Repos/mojito/myfork/lib/app/mojits/LazyLoad",
+    "defaults": {},
+    "definition": {},
     "assets": {
         "favicon.ico": "/favicon.ico"
     },
@@ -21,10 +22,8 @@
     "controller": "LazyLoad",
     "acAddons": [
         "assets",
-        "composite",
-        "params"
+        "params",
+        "composite"
     ],
-    "assetsRoot": "/yahoo.application.test50/LazyLoad/assets",
-    "defaults": {},
-    "definition": {}
+    "assetsRoot": "/yahoo.application.test50/LazyLoad/assets"
 }

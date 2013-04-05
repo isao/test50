@@ -1,8 +1,9 @@
 {
     "type": "HTMLFrameMojit",
-    "instanceId": "yui_3_7_3_1_1361812252650_50",
+    "instanceId": "yui_3_7_3_1_1365201677997_56",
     "config": {},
-    "fullPath": "/Users/isao/Repos/mojito/myfork/lib/app/mojits/HTMLFrameMojit",
+    "defaults": {},
+    "definition": {},
     "assets": {
         "favicon.ico": "/favicon.ico"
     },
@@ -16,7 +17,6 @@
             "engine": "hb"
         }
     },
-    "assetsRoot": "/yahoo.application.test50/HTMLFrameMojit/assets",
-    "defaults": {},
-    "definition": {}
+    "acAddons": {},
+    "assetsRoot": "/yahoo.application.test50/HTMLFrameMojit/assets"
 }

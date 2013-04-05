@@ -1,0 +1,42 @@
+{
+    "base": "frame",
+    "instanceId": "yui_3_7_3_1_1365201677997_53",
+    "type": "HTMLFrameMojit",
+    "config": {
+        "deploy": true,
+        "title": "test50 App",
+        "child": {
+            "type": "top_frame"
+        },
+        "assets": {
+            "bottom": {
+                "js": [
+                    "//yahoo.com/yahoo.crt.lib/yui-cfg.js"
+                ]
+            }
+        }
+    },
+    "assets": {
+        "top": {
+            "css": [
+                "./index.css"
+            ]
+        },
+        "favicon.ico": "/favicon.ico"
+    },
+    "id": "frame",
+    "defaults": {},
+    "definition": {},
+    "binders": {},
+    "langs": {},
+    "models": {},
+    "partials": {},
+    "views": {
+        "index": {
+            "content-path": ".",
+            "engine": "hb"
+        }
+    },
+    "acAddons": {},
+    "assetsRoot": "/yahoo.application.test50/HTMLFrameMojit/assets"
+}
