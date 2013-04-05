@@ -1,20 +1,20 @@
 {
     "base": "tunnelProxy",
-    "instanceId": "yui_3_7_3_1_1357861140914_63",
+    "instanceId": "yui_3_8_1_1_1365199545638_55",
     "type": "TunnelProxy",
     "id": "tunnelProxy",
     "config": {},
-    "defaults": {
-        "config": {}
-    },
-    "definition": {},
     "assets": {
         "favicon.ico": "/favicon.ico"
     },
     "binders": {},
     "langs": {},
     "models": {},
+    "partials": {},
     "views": {},
-    "acAddons": {},
-    "assetsRoot": "/yahoo.application.test50/TunnelProxy/assets"
+    "assetsRoot": "/yahoo.application.test50/TunnelProxy/assets",
+    "defaults": {
+        "config": {}
+    },
+    "definition": {}
 }

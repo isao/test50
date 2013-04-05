@@ -1,9 +1,7 @@
 {
     "type": "top_frame",
-    "instanceId": "yui_3_7_3_1_1357861140914_62",
+    "instanceId": "yui_3_8_1_1_1365199545638_50",
     "config": {},
-    "defaults": {},
-    "definition": {},
     "assets": {
         "favicon.ico": "/favicon.ico",
         "index.css": "/yahoo.application.test50/top_frame/assets/index.css"
@@ -13,12 +11,14 @@
     },
     "langs": {},
     "models": {},
+    "partials": {},
     "views": {
         "index": {
             "content-path": "/yahoo.application.test50/top_frame/views/index.hb.html",
             "engine": "hb"
         }
     },
-    "acAddons": {},
-    "assetsRoot": "/yahoo.application.test50/top_frame/assets"
+    "assetsRoot": "/yahoo.application.test50/top_frame/assets",
+    "defaults": {},
+    "definition": {}
 }

@@ -1,9 +1,7 @@
 {
     "type": "LazyLoad",
-    "instanceId": "yui_3_7_3_1_1357861140914_60",
+    "instanceId": "yui_3_8_1_1_1365199545638_53",
     "config": {},
-    "defaults": {},
-    "definition": {},
     "assets": {
         "favicon.ico": "/favicon.ico"
     },
@@ -12,6 +10,7 @@
     },
     "langs": {},
     "models": {},
+    "partials": {},
     "views": {
         "index": {
             "content-path": "/yahoo.application.test50/LazyLoad/views/index.hb.html",
@@ -21,8 +20,10 @@
     "controller": "LazyLoad",
     "acAddons": [
         "assets",
-        "params",
-        "composite"
+        "composite",
+        "params"
     ],
-    "assetsRoot": "/yahoo.application.test50/LazyLoad/assets"
+    "assetsRoot": "/yahoo.application.test50/LazyLoad/assets",
+    "defaults": {},
+    "definition": {}
 }

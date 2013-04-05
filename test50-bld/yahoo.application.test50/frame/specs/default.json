@@ -1,6 +1,6 @@
 {
     "base": "frame",
-    "instanceId": "yui_3_7_3_1_1357861140914_58",
+    "instanceId": "yui_3_8_1_1_1365199545638_51",
     "type": "HTMLFrameMojit",
     "config": {
         "deploy": true,
@@ -25,20 +25,17 @@
         "favicon.ico": "/favicon.ico"
     },
     "id": "frame",
-    "defaults": {},
-    "definition": {
-        "yui": {
-            "sharedYUIInstance": true
-        }
-    },
     "binders": {},
     "langs": {},
     "models": {},
+    "partials": {},
     "views": {
         "index": {
+            "content-path": ".",
             "engine": "hb"
         }
     },
-    "acAddons": {},
-    "assetsRoot": "/yahoo.application.test50/HTMLFrameMojit/assets"
+    "assetsRoot": "/yahoo.application.test50/HTMLFrameMojit/assets",
+    "defaults": {},
+    "definition": {}
 }
